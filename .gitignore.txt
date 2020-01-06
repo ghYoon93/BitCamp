@@ -1,4 +1,8 @@
-/.settings/
+### Eclipse ###
+tmp/
+*.tmp
+*.class
+.settings/
 /bin/
 .classpath
 .project
