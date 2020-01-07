@@ -16,10 +16,8 @@ import java.text.DecimalFormat;
 
 public class Calculator extends JFrame implements ActionListener{
 	public static final int ROW = 5;
-	private Container dispCon;
 	private JLabel dispL, inputL;
 	private JButton[][] button;
-	boolean isInit;
 	StringBuilder disp, input;
 	
     public Calculator() {
@@ -34,7 +32,6 @@ public class Calculator extends JFrame implements ActionListener{
     	setLayout(null);
     	setBounds(720, 100, 325, 505);
     	
-    	isInit = true;
     	disp = new StringBuilder("");
     	dispL = new JLabel(disp.toString(),dispL.RIGHT);
     	dispL.setFont(dispL.getFont().deriveFont(25.0f));
@@ -88,14 +85,9 @@ public class Calculator extends JFrame implements ActionListener{
 			System.out.println("¼ýÀÚ");
 			if(input.length() == 1 && input.toString().charAt(0) == '0') {
 				input.deleteCharAt(0);
-//				isInit = true;
 			}
 			input.append(command);
-			Double tmp = Double.parseDouble(input.toString());
-			
-			DecimalFormat df = new DecimalFormat("#,###.0##############");
-			inputL.setText(df.format(tmp));
-//			inputL.setText(df.format(input.toString()));
+			inputL.setText(convertSb(input));
 			
 		}
 		
@@ -104,28 +96,30 @@ public class Calculator extends JFrame implements ActionListener{
 			if(input.length() == 0) {
 				input.append("0");
 			}
-			Double tmp = Double.parseDouble(input.toString());
-			DecimalFormat df = new DecimalFormat("#,###.0##############");
-			inputL.setText(df.format(tmp));
-		
-//			inputL.setText(input.toString());
+			inputL.setText(convertSb(input));
 		}
 		if(command == (int)'C'-48) {
 			if(disp.length() != 0) {
 				disp.delete(0, disp.length()-1);
 			}
-			dispL.setText(disp.toString());
+			dispL.setText("");
 			input.delete(0, input.length());
 			input.append("0");
-			inputL.setText(input.toString());
+			inputL.setText(convertSb(input));
 		}
-		
+		if(command == (int)'¡À'-48) {
+			char checkNum = disp.charAt(disp.length()-1);
+			if(checkNum >= '0' && checkNum <= '9')
+			disp.append(input);
+			disp.append("¡À");
+			dispL.setText(disp.toString());
+			inputL.setText(convertSb(input));
+			input.append('¡À');
+			input.deleteCharAt(input.length()-1);
+		}
 		if(command == (int)'.'-48 && input.toString().indexOf('.') == -1) {
 			input.append(".");
-			Double tmp = Double.parseDouble(input.toString());
-			DecimalFormat df = new DecimalFormat("#,###.0##############");
-			inputL.setText(df.format(tmp));
-//			inputL.setText(input.toString());
+			inputL.setText(convertSb(input));
 		}
 		System.out.println(command);
 	} // actionPerformed
@@ -135,8 +129,22 @@ public class Calculator extends JFrame implements ActionListener{
 		new Calculator();
 	} // main
 	
-	public String addRestMark(StringBuilder sb) {
-		String convertedSb = sb.toString().replaceAll(",", "");
-		return convertedSb;
+	public static String convertSb(StringBuilder sb) {
+		DecimalFormat df = new DecimalFormat("#,###");
+		StringBuilder convertedSb = new StringBuilder("");
+		if(sb.toString().indexOf(".")!=-1) {
+			long tmp = Long.parseLong(sb.substring(0, sb.toString().indexOf('.')));
+			convertedSb.append(df.format(tmp));
+			convertedSb.append(sb.substring(sb.toString().indexOf('.'), sb.length()));				
+			
+		}else {
+			long tmp = Long.parseLong(sb.toString());
+			convertedSb.append(df.format(tmp));
+		}
+		return convertedSb.toString();
+	}
+	
+	public static String calc() {
+		return "a";
 	}
 }
