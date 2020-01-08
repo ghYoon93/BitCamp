@@ -109,7 +109,9 @@ public class Calculator extends JFrame implements ActionListener{
 		}
 		if(command == (int)'¡À'-48) {
 			char checkNum = disp.charAt(disp.length()-1);
-			if(checkNum >= '0' && checkNum <= '9')
+			if(checkNum >= '0' && checkNum <= '9') {
+				
+			}
 			disp.append(input);
 			disp.append("¡À");
 			dispL.setText(disp.toString());
