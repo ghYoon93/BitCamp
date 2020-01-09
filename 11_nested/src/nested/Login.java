@@ -2,6 +2,7 @@ package nested;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPasswordField;
 import javax.swing.JButton;
 import javax.swing.JTextField;
 import java.awt.event.WindowAdapter;
@@ -13,7 +14,8 @@ import java.awt.Container;
 public class Login {
 	private JFrame frame;
 	private JLabel idL, pwdL;
-	private JTextField idT, pwdT;
+	private JTextField idT;
+	private JPasswordField pwdT;
 	private JButton cancel, login;
 	
     public Login() {
@@ -21,7 +23,7 @@ public class Login {
     	idL = new JLabel("아이디");
     	pwdL = new JLabel("비밀번호");
     	idT = new JTextField();
-    	pwdT = new JTextField();
+    	pwdT = new JPasswordField();
     	login = new JButton("로그인");
     	cancel = new JButton("취소");
     	
@@ -44,6 +46,8 @@ public class Login {
     	frame.setTitle("로그인");
     	frame.setBounds(700, 100, 600, 400);
     	frame.setVisible(true);
+    	
+    	// Event
     	frame.addWindowListener(new WindowAdapter() {
     		@Override
     		public void windowClosing(WindowEvent e) {

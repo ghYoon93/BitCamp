@@ -124,8 +124,7 @@ public class SungJukService {
         	if(choice == 1) {
         		Collections.sort(list);
         		printArticle();
-//        	}else if(choice == 2) {
-////				Collections.sort(list,totalComparator); 
+        	}else if(choice == 2) {
         		Comparator<SungJukDTO> totalComparator = new Comparator<SungJukDTO>() {	
         			@Override
 					public int compare(SungJukDTO dto1, SungJukDTO dto2) {
@@ -133,13 +132,15 @@ public class SungJukService {
 						else if(dto1.getTotal() == dto2.getTotal()) return 0;
 						else return -1;
 					}
-        		}
-//				printArticle();
-//        	}
-//        	}else if(choice == 3) {
-//        		break;
-//        	}
+        		};
+				Collections.sort(list,totalComparator);	
+				printArticle();
+        	}else if(choice == 3) {
+        		break;
+        	}
+    
     	}
-    } // while
+    }
+     // while
      // sortArticle()
 }
