@@ -30,7 +30,6 @@ public class Calculator extends JFrame implements ActionListener{
     			{".","0","=","+"}
     	};
     	
-    	
     	result = new StringBuilder("0");
     	op = new ArrayList<Character>();
     	disp = new StringBuilder("");
@@ -87,9 +86,6 @@ public class Calculator extends JFrame implements ActionListener{
 		
 		if(isNumber(command)) {
 			System.out.println("¼ýÀÚ");
-//			if(isOperator(input) && isNumber(input)) {
-//				clear(input);
-//			}
 			if(isZero(input)) {
 				input.deleteCharAt(0);
 			}
@@ -106,9 +102,6 @@ public class Calculator extends JFrame implements ActionListener{
 			inputL.setText(convertSb(input));
 		}
 		if(command == 'C') {
-//			if(!isInit(disp)) {
-//			clear(disp);
-//			}
 			reset();
 			dispL.setText(disp.toString());
 			inputL.setText(convertSb(input));
@@ -129,11 +122,6 @@ public class Calculator extends JFrame implements ActionListener{
 			disp.append(command);
 			dispL.setText(disp.toString());
 			inputL.setText(convertSb(result));
-//			input.append(command);
-//			disp.append(input);
-//			inputL.setText(convertSb(input));
-//			input.append('¡À');
-//			input.deleteCharAt(input.length()-1);
 		}
 		if(command == '¡¿') {
 			if(isInit(input)) {
@@ -154,20 +142,6 @@ public class Calculator extends JFrame implements ActionListener{
 			disp.append(command);
 			dispL.setText(disp.toString());
 			inputL.setText(convertSb(result));
-//			if(!isNumber(input)) {
-//				System.out.println(".........");
-//				input.deleteCharAt(input.length()-1);
-//			}
-//			if(op.size() == 2) {
-//				op.remove(1);
-//				disp.deleteCharAt(disp.length()-1);
-//			}
-//			disp.append(input);
-//			calc();
-//			op.add(command);
-//			disp.append(command);
-//			dispL.setText(disp.toString());
-//			inputL.setText(convertSb(result));
 		}
 		if(command == '+') {
 			if(isInit(input)) {
@@ -221,14 +195,6 @@ public class Calculator extends JFrame implements ActionListener{
 				input.append(result);
 				calc();
 			}
-//			if(op.size() == 0) {
-//				disp.append(input.toString()+command);
-//				dispL.setText(disp.toString());
-//				op.add(command);
-//			}else {
-//				calc();
-//				op.add(command);
-//			}
 		}
 		if(command=='.' && !isDouble(input)) {
 			input.append(".");
