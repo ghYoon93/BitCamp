@@ -1,29 +1,23 @@
 package swing;
 
 import java.awt.Color;
-import java.util.HashMap;
 
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
 
 public class ColorMenu implements IMenu{
 	private JPanel colorMenu;
-	private JComboBox<String> colorList;
-	private HashMap<String, Color> colorMap = new HashMap<String,Color>();
+	private JComboBox<String> colorComboBox;
 	private String[] colorName = {"»ö»ó ¼±ÅÃ","»¡°­","ÃÊ·Ï","ÆÄ¶û","º¸¶ó","ÇÏ´Ã"};
-	private Color[] color = {Color.BLACK,Color.RED,Color.GREEN, Color.BLUE, Color.MAGENTA, Color.CYAN};
    
 	public ColorMenu() {
 		colorMenu = new JPanel();
-    	colorList = new JComboBox<String>();
-    	colorMap = new HashMap<String, Color>();
+    	colorComboBox = new JComboBox<String>();
     	for(int i = 0; i<colorName.length; i++) {
-    		colorMap.put(colorName[i], color[i]);
-    		colorList.addItem(colorName[i]);
+    		colorComboBox.addItem(colorName[i]);
     	}
-    	colorMenu.add(colorList);
+    	colorMenu.add(colorComboBox);
     }
-	
 
 	@Override
 	public JPanel getMenu() {
@@ -31,8 +25,8 @@ public class ColorMenu implements IMenu{
 	}
 
 
-	public Color getColor() {
-		System.out.println(colorMap.get(colorList.getSelectedItem()));
-		return colorMap.get(colorList.getSelectedItem());
+	public Color getColorItem() {
+		ColorItem colorItem = new ColorItem(colorComboBox.getSelectedItem().toString());
+		return colorItem.getColor();
 	}
 }

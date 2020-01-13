@@ -26,7 +26,7 @@ public class CoordMenu implements IMenu{
     	coordPane.setLayout(new FlowLayout());
     	for(String each : coordName) {
     		coordL = new JLabel(each);
-    		System.out.println(each);
+//    		System.out.println(each);
     		coordT = new JTextField(5);
     		coordMap.put(each, coordT);
     		coordPane.add(coordL);

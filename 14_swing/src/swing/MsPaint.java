@@ -16,16 +16,16 @@ import javax.swing.JPanel;
 // Canvas의 기본색은 연보라색
 // x1T, y1T, x2T, y2T 좌표 입력 후 그리기 버튼 누르면 원하는 도형으로 Canvas에 그려진다.
 
-public class MsPaint extends JFrame implements ActionListener{
+public class MsPaint extends JFrame implements ActionListener {
 	public final int FRAME_WIDTH = 1280, FRAME_HEIGHT = 960;
 	public final int FRAME_X = 180, FRAME_Y = 20;
 	private Container con;
-	private JButton drawButton;
+	private JButton drawButton, removeButton, revertButton;
 	private JCheckBox fillCheckBox;
 	private CoordMenu coordMenu;
 	private ShapeMenu shapeMenu; 
 	private ColorMenu colorMenu;
-	private MsCanvas msCanvas;
+	private DrCanvas drCanvas;
 	
     public MsPaint() {
     	super("미니 그림판");
@@ -40,17 +40,24 @@ public class MsPaint extends JFrame implements ActionListener{
     	colorMenu = new ColorMenu();
     	drawButton = new JButton("그리기");
     	drawButton.addActionListener(this);
+    	removeButton = new JButton("모두 지우기");
+    	removeButton.addActionListener(this);
+    	revertButton = new JButton("되돌리기");
+    	revertButton.addActionListener(this);
     	JPanel southPane = new JPanel();
     	southPane.setLayout(new FlowLayout());
     	southPane.add(shapeMenu.getMenu());
     	southPane.add(colorMenu.getMenu());
     	southPane.add(drawButton);
+    	southPane.add(removeButton);
+    	southPane.add(revertButton);
     	
-    	msCanvas = new MsCanvas();
+    	drCanvas = new DrCanvas(this);
     	con = getContentPane();
     	con.add("North", northPane);
-    	con.add("Center", msCanvas);
+    	con.add("Center", drCanvas);
     	con.add("South", southPane);
+    	
     	
     	setBounds(FRAME_X,FRAME_Y,FRAME_WIDTH,FRAME_HEIGHT);
     	setVisible(true);
@@ -59,19 +66,33 @@ public class MsPaint extends JFrame implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == drawButton) {
-			System.out.println("drawButton");
+//			System.out.println("drawButton");
 			draw();
 			//draw(좌표들, 도형 종류, 색상, 채우기 유무, 캔버스);
+		}else if(e.getSource() == removeButton) {
+			drCanvas.removeAll();
+		}else if(e.getSource() == revertButton) {
+			drCanvas.revert();
 		}
 	}
 	public void draw() {
 		int[] coordList = coordMenu.getCoord();
 		String shape = shapeMenu.getShape();
-		Color color = colorMenu.getColor();
+		Color color = colorMenu.getColorItem();
 		boolean fillCheck = fillCheckBox.isSelected();
-		msCanvas.draw(coordList, shape, color, fillCheck);
+		drCanvas.drawByButton(coordList, shape, color, fillCheck);
+	}
+	public JCheckBox getFillCheckBox() {
+		return fillCheckBox;
+	}
+	public ShapeMenu getShapeMenu() {
+		return shapeMenu;
+	}
+	public ColorMenu getColorMenu() {
+		return colorMenu;
 	}
 	public static void main(String[] args) {
 		new MsPaint();
 	}
+	
 }

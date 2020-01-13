@@ -68,7 +68,6 @@ public class Timer extends JFrame implements ActionListener, Runnable{
 		time[1].setText("0");
 		time[3].setText("0");
 		time[4].setText("0");
-		System.out.println("0");
 		for(ms = 0; ms <= 2000; ms++) {
 			try {
 				Thread.sleep(10);
@@ -81,20 +80,23 @@ public class Timer extends JFrame implements ActionListener, Runnable{
 			if(ms/100 != 0) time[1].setText(Integer.toString((ms/100)%10));
 			if(ms/1000 != 0) time[0].setText(Integer.toString(ms/1000));
 		}
+		startButton.setEnabled(true);
+		stopButton.setEnabled(false);
 	}
 
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		Thread t;
 		if(e.getSource() == startButton) {
-			System.out.println("asdf");
 			stop = false;
-			Thread t = new Thread(this);
+			t = new Thread(this);
 			t.start();
 			startButton.setEnabled(false);
 			stopButton.setEnabled(true);
 		}else if(e.getSource() == stopButton) {
 			stop = true;
+			t = null;
 			startButton.setEnabled(true);
 			stopButton.setEnabled(false);
 		}

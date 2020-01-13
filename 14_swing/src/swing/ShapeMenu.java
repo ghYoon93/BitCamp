@@ -9,7 +9,7 @@ import javax.swing.JRadioButton;
 
 public class ShapeMenu implements IMenu{
 	private JPanel shapeMenu;
-    private String[] shape = {"선","원","사각형","둥근 사각형"};
+    private String[] shape = {"선","원","사각형","둥근 사각형","연필"};
     private JRadioButton shapeB;
     private ArrayList<JRadioButton> shapeList;
 //    private JRadioButton[] shapeB;
