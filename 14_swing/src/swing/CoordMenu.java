@@ -22,13 +22,13 @@ public class CoordMenu implements IMenu{
     	coordMenu.setLayout(new FlowLayout());
     	
     	coordMap = new HashMap<String, JTextField>();
+    	coordPane = new JPanel();
+    	coordPane.setLayout(new FlowLayout());
     	for(String each : coordName) {
     		coordL = new JLabel(each);
     		System.out.println(each);
     		coordT = new JTextField(5);
     		coordMap.put(each, coordT);
-    		coordPane = new JPanel();
-    		coordPane.setLayout(new FlowLayout());
     		coordPane.add(coordL);
     		coordPane.add(coordMap.get(each));
     		coordMenu.add(coordPane);
