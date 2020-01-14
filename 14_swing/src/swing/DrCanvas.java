@@ -16,7 +16,7 @@ public class DrCanvas extends Canvas implements MouseListener, MouseMotionListen
 	private Color color;
 	private String shapeType;
 	private boolean isDrawing, fillCheck;
-	private int[] coord;
+	private int x1, x2, y1, y2, z1, z2;
 	private int count = 0;
     public DrCanvas(MsPaint msPaint) {
     	this.msPaint = msPaint;
@@ -28,14 +28,14 @@ public class DrCanvas extends Canvas implements MouseListener, MouseMotionListen
     public void paint(Graphics g) {
     	System.out.println(shapeList.size());
     	for(ShapeDTO each : shapeList) {
-    		System.out.print("x1:" +each.getCoord()[0]);
-        	System.out.print(" x2:" +each.getCoord()[1]);
-        	System.out.print(" y1:" +each.getCoord()[2]);
-        	System.out.println(" y2:" + each.getCoord()[3]);
+//    		System.out.print("x1:" +each.getCoord()[0]);
+//        	System.out.print(" x2:" +each.getCoord()[1]);
+//        	System.out.print(" y1:" +each.getCoord()[2]);
+//        	System.out.println(" y2:" + each.getCoord()[3]);
     		int x1 = each.getX1();
-    		int x2 = each.getX1();
-    		int y1 = each.getCoord()[2];
-    		int y2 = each.getCoord()[3];
+    		int x2 = each.getX2();
+    		int y1 = each.getY1();
+    		int y2 = each.getY2();
     		Color color = each.getColor();
     		boolean fillCheck = each.isFillCheck();
     		String shapeType = each.getShape();
@@ -79,23 +79,40 @@ public class DrCanvas extends Canvas implements MouseListener, MouseMotionListen
     		}
     	}
     }
-    public void drawByButton(int[] coord, String shape, Color color, boolean fillCheck) {
-    	shape= new ShapeDTO(x1,x2,y1,y2,z1,z2, shape, color, fillCheck);
+    public void drawByButton(int x1, int x2, int y1, int y2,int z1, int z2, String shapeType, Color color, boolean fillCheck) {
+    	shape= new ShapeDTO(x1,x2,y1,y2,z1,z2, shapeType, color, fillCheck);
     	shapeList.add(this.shape);
     	repaint();
     }
-    public void draw(int[] coord, String shapeType, Color color, boolean fillCheck) {
+    public void drawByButton(int x1, int x2, int y1, int y2, String shapeType, Color color, boolean fillCheck) {
+    	shape= new ShapeDTO(x1,x2,y1,y2,shapeType, color, fillCheck);
+    	shapeList.add(this.shape);
+    	repaint();
+    }
+    public void draw(int x1,int x2,int y1,int y2, String shapeType, Color color, boolean fillCheck) {
     	if(!shapeType.equals("연필") && shapeList.size() > 0 && isDrawing && shapeList.size() >= count) {
     		shapeList.remove(shapeList.size()-1);
     		System.out.println("연필 삭제");
     	}
-    	int[] coord2 = Arrays.copyOf(coord,coord.length);
-    	shape= new ShapeDTO(x1,x2,y1,y2,z1,z2, shapeType, color, fillCheck);
+    	shape= new ShapeDTO(x1, x2, y1, y2, shapeType, color, fillCheck);
     	shapeList.add(shape);
     	repaint();
     	if(shapeType.equals("연필")) {
-    		x1 = x2;
-    		x1 = x2;
+    		this.x1 = x2;
+    		this.y1 = y2;
+    	}
+    }
+    public void draw(int x1,int x2,int y1,int y2, int z1,int z2, String shapeType, Color color, boolean fillCheck) {
+    	if(!shapeType.equals("연필") && shapeList.size() > 0 && isDrawing && shapeList.size() >= count) {
+    		shapeList.remove(shapeList.size()-1);
+    		System.out.println("연필 삭제");
+    	}
+    	shape= new ShapeDTO(x1,x2, y1, y2,z1, z2, shapeType, color, fillCheck);
+    	shapeList.add(shape);
+    	repaint();
+    	if(shapeType.equals("연필")) {
+    		this.x1 = x2;
+    		this.y1 = y2;
     	}
     }
     public void removeAll() {
@@ -120,15 +137,13 @@ public class DrCanvas extends Canvas implements MouseListener, MouseMotionListen
 		color = msPaint.getColorMenu().getColorItem();
     	shapeType = msPaint.getShapeMenu().getShape();
     	fillCheck = msPaint.getFillCheckBox().isSelected();
-		coord = new int[6];
 		x1 = e.getX(); // x1;
 		y1 = e.getY(); // y1;
 	}
 	public void mouseDragged(MouseEvent e) {
 		x2 = e.getX(); // x2;
 		y2 = e.getY(); // y2;
-//		int[] coord2 = coord
-		draw(coord, shapeType, color, fillCheck);
+		draw(x1, x2, y1, y2, shapeType, color, fillCheck);
 	}
 	public void mouseReleased(MouseEvent e) {
 		isDrawing = false;

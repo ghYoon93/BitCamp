@@ -3,7 +3,6 @@ package swing;
 import java.awt.Color;
 
 public class ShapeDTO {
-	private int[] coord = new int [6];
 	private String shapeType;
 	private Color color;
 	private boolean fillCheck;
@@ -14,7 +13,16 @@ public class ShapeDTO {
     	this.y1 = y1;
     	this.y2 = y2;
     	this.z1 = z1;
-    	this.z1 = z2;
+    	this.z2 = z2;
+    	this.shapeType = shapeType;
+    	this.color = color;
+    	this.fillCheck = fillCheck;
+    }
+    public ShapeDTO(int x1,int x2, int y1, int y2, String shapeType, Color color, boolean fillCheck) {
+    	this.x1 = x1;
+    	this.x2 = x2;
+    	this.y1 = y1;
+    	this.y2 = y2;
     	this.shapeType = shapeType;
     	this.color = color;
     	this.fillCheck = fillCheck;
@@ -50,10 +58,6 @@ public class ShapeDTO {
 
 	public boolean isFillCheck() {
 		return fillCheck;
-	}
-
-	public int[] getCoord() {
-		return coord;
 	}
 
 

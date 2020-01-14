@@ -76,11 +76,14 @@ public class MsPaint extends JFrame implements ActionListener {
 		}
 	}
 	public void draw() {
-		int[] coordList = coordMenu.getCoord();
+		int x1 = coordMenu.getCoord()[0];
+		int x2 = coordMenu.getCoord()[1];
+		int y1 = coordMenu.getCoord()[2];
+		int y2 = coordMenu.getCoord()[3];
 		String shape = shapeMenu.getShape();
 		Color color = colorMenu.getColorItem();
 		boolean fillCheck = fillCheckBox.isSelected();
-		drCanvas.drawByButton(coordList, shape, color, fillCheck);
+		drCanvas.drawByButton(x1, x2, y1, y2, shape, color, fillCheck);
 	}
 	public JCheckBox getFillCheckBox() {
 		return fillCheckBox;
