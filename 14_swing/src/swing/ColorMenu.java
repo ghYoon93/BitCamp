@@ -1,7 +1,6 @@
 package swing;
 
 import java.awt.Color;
-
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
 
@@ -23,6 +22,7 @@ public class ColorMenu implements IMenu{
 	public JPanel getMenu() {
 		return colorMenu;
 	}
+
 
 
 	public Color getColorItem() {
