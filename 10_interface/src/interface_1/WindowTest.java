@@ -34,13 +34,11 @@ public class WindowTest extends Frame implements MouseListener, MouseMotionListe
 	}
 	
 	public void mouseClicked(MouseEvent e) {
-		Graphics g = getGraphics();
-		g.drawString("X:"+ e.getX() + "\t Y:+e.getY() ", e.getX(), e.getY());
 //		System.out.println("마우스 클릭");
 //		System.out.println("X:"+ e.getX() + "\t Y: "+e.getY());
-//		this.x = e.getX();
-//		this.y = e.getY();
-//		repaint();  // update() -> paint() 순으로 호출
+		this.x = e.getX();
+		this.y = e.getY();
+		repaint();  // update() -> paint() 순으로 호출
 	}
 	
 	
@@ -54,6 +52,6 @@ public class WindowTest extends Frame implements MouseListener, MouseMotionListe
 	
 	
 	public void paint(Graphics g) {
-//		g.drawString("X:" + this.x+"\t Y: "+this.y, x,y);
+		g.drawString("X:" + this.x+"\t Y: "+this.y, x,y);
 	}
 }
