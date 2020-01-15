@@ -16,6 +16,7 @@ import javax.swing.JPanel;
 // Canvas의 기본색은 연보라색
 // x1T, y1T, x2T, y2T 좌표 입력 후 그리기 버튼 누르면 원하는 도형으로 Canvas에 그려진다.
 
+//<<<<<<< HEAD
 public class MsPaint extends JFrame implements ActionListener {
 	public final int FRAME_WIDTH = 1280, FRAME_HEIGHT = 960;
 	public final int FRAME_X = 180, FRAME_Y = 20;
@@ -44,6 +45,7 @@ public class MsPaint extends JFrame implements ActionListener {
     	removeButton.addActionListener(this);
     	revertButton = new JButton("되돌리기");
     	revertButton.addActionListener(this);
+    	
     	JPanel southPane = new JPanel();
     	southPane.setLayout(new FlowLayout());
     	southPane.add(shapeMenu.getMenu());
@@ -58,7 +60,6 @@ public class MsPaint extends JFrame implements ActionListener {
     	con.add("Center", drCanvas);
     	con.add("South", southPane);
     	
-    	
     	setBounds(FRAME_X,FRAME_Y,FRAME_WIDTH,FRAME_HEIGHT);
     	setVisible(true);
     	setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -66,9 +67,7 @@ public class MsPaint extends JFrame implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == drawButton) {
-//			System.out.println("drawButton");
 			draw();
-			//draw(좌표들, 도형 종류, 색상, 채우기 유무, 캔버스);
 		}else if(e.getSource() == removeButton) {
 			drCanvas.removeAll();
 		}else if(e.getSource() == revertButton) {
