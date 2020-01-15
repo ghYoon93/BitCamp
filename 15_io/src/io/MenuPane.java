@@ -1,8 +1,11 @@
 package io;
 
+import java.awt.event.InputEvent;
+
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.KeyStroke;
 
 public class MenuPane extends JMenuBar {
 	private JMenu fileM, editM, viewM;
@@ -22,7 +25,9 @@ public class MenuPane extends JMenuBar {
     	
     	editM = new JMenu("편집");
     	cutM = new JMenuItem("자르기");
+    	cutM.setAccelerator(KeyStroke.getKeyStroke('X', InputEvent.ALT_MASK));
     	copyM = new JMenuItem("복사");
+    	copyM.setAccelerator(KeyStroke.getKeyStroke('V', InputEvent.ALT_MASK));
     	pasteM = new JMenuItem("붙여넣기");
     	editM.add(cutM);
     	editM.add(copyM);

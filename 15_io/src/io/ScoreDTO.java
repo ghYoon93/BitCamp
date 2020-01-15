@@ -46,4 +46,9 @@ public class ScoreDTO implements Serializable {
 	public double getAvg() {
 		return avg;
 	}
+	
+	@Override
+	public String toString() {
+		return String.format("%6s, %6s %5d %5d %5d, %d, %9.2f",hak, name, kor, eng, math, tot, avg);
+	}
 }
