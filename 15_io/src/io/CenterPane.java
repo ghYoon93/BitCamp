@@ -20,8 +20,8 @@ public class CenterPane implements Pane{
     	centerP.setLayout(new BorderLayout());
     	ICompItem<InputType, JPanel> inputItem = new InputItem();
     	JPanel centerLP = new JPanel();
-    	centerLP.setLayout(new GridLayout(inputList.size(), 1));
     	inputList = inputItem.getComp();
+    	centerLP.setLayout(new GridLayout(inputList.size(), 1));
     	Iterator<InputType> keys = inputList.keySet().iterator();
     	while(keys.hasNext()) {
     		InputType key = keys.next();
@@ -45,6 +45,9 @@ public class CenterPane implements Pane{
 	@Override
 	public JPanel getPane() {
 		return centerP;
+	}
+	public HashMap<InputType, JPanel> getComp() {
+		return inputList;
 	}
 	
 	

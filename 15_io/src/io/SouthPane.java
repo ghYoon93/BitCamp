@@ -7,7 +7,7 @@ import java.util.Iterator;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
-public class SouthPane implements Pane{
+public class SouthPane implements Pane<ButtonType, JButton>{
 	private JPanel pane;
 	HashMap<ButtonType, JButton> list;
 	public SouthPane(ScoreForm scoreForm) {
@@ -28,5 +28,9 @@ public class SouthPane implements Pane{
 	@Override
 	public JPanel getPane() {
 		return pane;
+	}
+	@Override
+	public HashMap<ButtonType, JButton> getComp() {
+		return list;
 	}
 }
