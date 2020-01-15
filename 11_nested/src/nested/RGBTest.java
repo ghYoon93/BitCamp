@@ -62,13 +62,13 @@ public class RGBTest extends JFrame {
     	});
     	
     	setBounds(700, 400, 500, 500);
-    	setVisible(true);
     	addWindowListener(new WindowAdapter() {
     		@Override
     		public void windowClosing(WindowEvent e) {
     			System.exit(0);
     		}
     	});
+    	setVisible(true);
     }
 
 	class DrCanvas extends Canvas {
