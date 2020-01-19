@@ -5,6 +5,7 @@ import java.io.Serializable;
 public class PersonDTO implements Serializable {
     private String name;
     private int age;
+    private static int number = 0;
     private double height;
     public PersonDTO(String name, int age, double height) {
     	this.name = name;

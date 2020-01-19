@@ -10,27 +10,26 @@ public class UrlTest2 {
     	//http://liebli.com/goods/goods_list.php?cateCd=001002
 		URL url = new URL("http://liebli.com/goods/goods_list.php?cateCd=001002");
 		InputStreamReader iStream = new InputStreamReader(url.openStream());
-		BufferedReader buffReader = new BufferedReader(iStream);
+		BufferedReader br = new BufferedReader(iStream);
 		StringBuilder line = new StringBuilder();
 		
-		int[] count = new int[2];
-		String[][] strings = {{"18K","18k"},{"14K","14k"}};
+		String[] stringArr = {"14K","18K"};
+		int[] count = new int[stringArr.length];
 
 		while(true) {
-			if(line.append(buffReader.readLine()).toString().equals("null")) break;
+			line.append(br.readLine());
+			if(line.toString().equals("null")) break;
 			
-			for(int i = 0; i < strings.length; i++) {
-				for(int j = 0; j < strings[i].length; j++) {
-					count[i] += new UrlTest2().findStr(line, strings[i][j]);
-				}
+			for(int i = 0; i < stringArr.length; i++) {
+				count[i] += new UrlTest2().findStr(line, stringArr[i]);
 			}
 			
 			line.setLength(0);
 		}
-		buffReader.close();
+		br.close();
 		
 		for(int i = 0; i < count.length; i++) {
-			System.out.println(strings[i][0]+": " + count[i]);
+			System.out.println(stringArr[i]+": " + count[i]);
 		}
 	} // main
     
