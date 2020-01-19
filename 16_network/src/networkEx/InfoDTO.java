@@ -32,6 +32,7 @@ public class InfoDTO implements Serializable {
     	if(code == Protocol.ENTER) return nickName+Protocol.ENTER.getMsg();
     	if(code == Protocol.EXIT) return nickName+Protocol.EXIT.getMsg();
     	if(code == Protocol.SEND_MESSAGE) return "["+nickName+"]" +Protocol.SEND_MESSAGE.getMsg()+ msg;
+    	
     	return null;
     }
 }

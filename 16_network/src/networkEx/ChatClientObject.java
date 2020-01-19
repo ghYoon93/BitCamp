@@ -30,8 +30,10 @@ public class ChatClientObject extends JFrame implements ActionListener, Runnable
 	private ObjectOutputStream oos;
 	private static int number = 1;
 	private InfoDTO user; 
+	private String nickName, userIP;
 	
     public ChatClientObject() {
+    	System.out.println("Chat Client Object");
     	Container container = getContentPane();
     	output = new JTextArea();
     	output.setEditable(false);
@@ -54,16 +56,18 @@ public class ChatClientObject extends JFrame implements ActionListener, Runnable
     		@Override
     		public void windowClosing(WindowEvent e) {
     			if(user != null) {
-    				user.setCode(Protocol.EXIT);
+    				InfoDTO dto = new InfoDTO(nickName, userIP);
+//    				user.setCode(Protocol.EXIT);
     				try {
-						oos.writeObject(user);
+    					dto.setCode(Protocol.EXIT);
+						oos.writeObject(dto);
 						oos.flush();
 					} catch (IOException e1) {
 						e1.printStackTrace();
 					}
-    			}else {
-    				System.exit(0);    				
     			}
+				System.exit(0);    				
+    			
     		}
     	});
     }
@@ -74,7 +78,7 @@ public class ChatClientObject extends JFrame implements ActionListener, Runnable
     		System.exit(0);
     	}
     	
-    	String nickName = JOptionPane.showInputDialog(this, "닉네임을 입력하세요", "닉네임",JOptionPane.INFORMATION_MESSAGE);
+    	nickName = JOptionPane.showInputDialog(this, "닉네임을 입력하세요", "닉네임",JOptionPane.INFORMATION_MESSAGE);
     	if(nickName == null || nickName.length() == 0) {
     		nickName = "guest"+Integer.toString(number++);
     	}
@@ -82,12 +86,12 @@ public class ChatClientObject extends JFrame implements ActionListener, Runnable
     	
     	try {
     		InetAddress local = InetAddress.getLocalHost();
-        	String userIP = local.getHostAddress();
+        	userIP = local.getHostAddress();
         	user = new InfoDTO(nickName, userIP);
         	user.setCode(Protocol.ENTER);
 			socket = new Socket(serverIP, 9500);
 			oos = new ObjectOutputStream(socket.getOutputStream());
-//			oos.flush();
+			oos.flush();
 			ois = new ObjectInputStream(socket.getInputStream());
 			oos.writeObject(user);
 			oos.flush();
@@ -109,17 +113,17 @@ public class ChatClientObject extends JFrame implements ActionListener, Runnable
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		try {
-			System.out.println("actionPerformed start");
+			System.out.println("ActionEvent");
 			String msg = input.getText();
-			user.setMsg(msg+"\n");
-			user.setCode(Protocol.SEND_MESSAGE);
-			System.out.println("actionPerformed: "+user.getMsg());
+			InfoDTO dto = new InfoDTO(user.getNickName(), user.getUserIP());
+			dto.setMsg(msg);
+			dto.setCode(Protocol.SEND_MESSAGE);
 			if(msg.equalsIgnoreCase("quit")) {
-				System.out.println("actionPerformed: "+user.getMsg());
-				user.setCode(Protocol.EXIT);
+				System.out.println("actionPerformed: "+dto.getMsg());
+				dto.setCode(Protocol.EXIT);
 			}
-			oos.writeObject(user);
-			System.out.print(user.getCode()+"\t"+user.getMsg());
+			System.out.println("ActionEvent "+dto.getCode());
+			oos.writeObject(dto);
 			oos.flush();
 			input.setText("");
 		} catch (IOException e1) {
@@ -129,30 +133,26 @@ public class ChatClientObject extends JFrame implements ActionListener, Runnable
 	}
 
 	public void run() {
-		System.out.println("client run");
-		InfoDTO user;
 		while(true) {
 			try {
-				user = (InfoDTO) ois.readObject();
-				Protocol code = user.getCode();
-				System.out.println("run/while code"+code);
-				System.out.println("message"+user.getMsg());
-				if(user == null || code.equals(Protocol.EXIT)){
+				System.out.println("TextArea Event");
+				InfoDTO disp = (InfoDTO) ois.readObject();
+				Protocol code = disp.getCode();
+				System.out.println("TextArea Event "+disp.getCode());
+				if(disp == null || code.equals(Protocol.EXIT)){
+					System.out.println("TextArea Event disp is null");
 					oos.close();
 					ois.close();
 					socket.close();
 					System.exit(0);
 				}
-				System.out.println("run client: "+user);
-				output.append(user+"\n");
+				output.append(disp.toString()+"\n");
 				int pos = output.getText().length();
 				output.setCaretPosition(pos);
 			} catch (ClassNotFoundException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 				System.exit(0);
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 				System.exit(0);
 			}

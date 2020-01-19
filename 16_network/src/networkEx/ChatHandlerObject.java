@@ -11,16 +11,16 @@ public class ChatHandlerObject extends Thread{
 	private ObjectOutputStream oos;
 	private ObjectInputStream ois;
 	private List<ChatHandlerObject> list;
-	private InfoDTO user;
+//	private InfoDTO user;
 	public ChatHandlerObject(Socket socket, List<ChatHandlerObject> list) {
 		this.socket = socket;
 		this.list = list;
+		
 		try {
-//			oos.flush();
 			oos = new ObjectOutputStream(socket.getOutputStream());
+			oos.flush();
 			ois = new ObjectInputStream(socket.getInputStream());
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			System.exit(0);
 		}
@@ -28,21 +28,22 @@ public class ChatHandlerObject extends Thread{
 	
 	public void run() {
 		try {
-			user = (InfoDTO) ois.readObject();
-			System.out.println(user.getMsg()+"\t"+user.getCode());
+//			inputData = (InfoDTO) ois.readObject();
+//			broadcast(inputData);
+			InfoDTO inputData;
 			while(true) {
-				System.out.println("while"+user.getMsg()+"\t"+user.getCode());
-				if(user == null || user.getCode() == Protocol.EXIT) {
+				inputData = (InfoDTO) ois.readObject();
+				System.out.println(inputData.getMsg()+"\t"+inputData.getCode());				
+				if(inputData == null || inputData.getCode() == Protocol.EXIT) {
 					System.out.println("handler run break");
 					break;
 				}
-				System.out.println("run ChatHandler"+user);
-				broadcast(user);
-				user = (InfoDTO) ois.readObject();
-				System.out.println("whileE"+user.getMsg()+"\t"+user.getCode());
+				System.out.println("run ChatHandler"+inputData);
+				broadcast(inputData);
+				System.out.println("whileE"+inputData.getMsg()+"\t"+inputData.getCode());
 			}
-			user.setCode(Protocol.EXIT);
-			oos.writeObject(user);
+			inputData.setCode(Protocol.EXIT);
+			oos.writeObject(inputData);
 			oos.flush();
 			list.remove(this);
 			oos.close();
